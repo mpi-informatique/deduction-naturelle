@@ -708,6 +708,11 @@ const App: React.FC = () => {
           </div>
 
           <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+            <a
+              href="https://mpi-informatique.github.io/"
+              title="MPI Informatique"
+              className={`${isDarkMode ? "bg-slate-800 hover:bg-slate-700 text-slate-100 border-slate-700" : "bg-white/15 hover:bg-white/25 text-white border-white/30"} inline-flex items-center justify-center h-11 px-3 text-sm font-semibold rounded-xl border-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80`}
+            >MPI</a>
             <button
               onClick={backToExercises}
               aria-label={t.home}
