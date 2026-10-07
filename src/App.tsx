@@ -689,7 +689,7 @@ const App: React.FC = () => {
           } as React.CSSProperties
         }
       >
-        <div className="max-w-[112rem] mx-auto flex items-center justify-between gap-2 sm:gap-4">
+        <div className="max-w-[112rem] mx-auto flex flex-wrap sm:flex-nowrap items-center justify-between gap-2 sm:gap-4">
           <div className="flex items-center gap-2 sm:gap-3">
             <button
               onClick={toggleLeftPanel}
@@ -707,7 +707,7 @@ const App: React.FC = () => {
             </h1>
           </div>
 
-          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0 ml-auto">
             <a
               href="https://mpi-informatique.github.io/"
               title="MPI Informatique"
