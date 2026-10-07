@@ -729,7 +729,7 @@ const App: React.FC = () => {
               </svg>
             </button>
             <a
-              href="https://github.com/fortierq/deduction-naturelle"
+              href="https://github.com/mpi-informatique/deduction-naturelle"
               target="_blank"
               rel="noopener noreferrer"
               aria-label={t.github}

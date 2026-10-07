@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://fortierq.github.io/deduction-naturelle/sitemap.xml
+Sitemap: https://mpi-informatique.github.io/deduction-naturelle/sitemap.xml
