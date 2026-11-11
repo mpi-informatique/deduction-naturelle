@@ -49,6 +49,9 @@ const App: React.FC = () => {
   const messageTimeoutRef = useRef<number | null>(null);
   const solveAbortRef = useRef<AbortController | null>(null);
   const solveRequestIdRef = useRef(0);
+  const [initialSequent, setInitialSequent] = useState(
+    () => new URLSearchParams(window.location.search).get("sequent"),
+  );
   const [modalState, setModalState] = useState<ModalConfig | null>(null);
   const [panelModalValues, setPanelModalValues] = useState<
     Record<string, string>
@@ -198,6 +201,21 @@ const App: React.FC = () => {
     },
     [startExercise, showMessage, t],
   );
+
+  useEffect(() => {
+    if (initialSequent === null) return;
+    setInitialSequent(null);
+
+    const parts = initialSequent.split("|-");
+    if (parts.length !== 2) {
+      showMessage(t.invalidFormula, "error");
+      return;
+    }
+
+    const [context, goal] = parts;
+    const hypotheses = context.split(",").map((formula) => formula.trim()).filter(Boolean);
+    createCustomSequent(goal.trim(), hypotheses);
+  }, [initialSequent, createCustomSequent, showMessage, t.invalidFormula]);
 
   const resetProof = useCallback(() => {
     if (parsedExercise) {
@@ -677,6 +695,8 @@ const App: React.FC = () => {
     setIsFiltersDrawerOpen((prev) => !prev);
   }, [currentExercise]);
 
+  if (initialSequent !== null) return null;
+
   return (
     <div
       className={`${isDarkMode ? "dark" : ""} min-h-screen ${isDarkMode ? "bg-slate-900 text-slate-100" : "bg-slate-100 text-slate-800"}`}
@@ -939,21 +959,21 @@ const App: React.FC = () => {
               </div>
             )}
 
-            {/* Message Area */}
-            {message && (
-              <div
-                className={`mb-4 mx-auto inline-flex w-full items-center justify-center rounded-lg px-4 py-2.5 md:px-6 md:py-3 min-h-[42px] md:min-h-[50px] text-center font-semibold ${message.type === "success"
-                  ? "bg-green-100 border-2 border-green-500 text-green-800 dark:bg-green-900/30 dark:border-green-500 dark:text-green-200"
-                  : message.type === "error"
-                    ? "bg-red-100 border-2 border-red-500 text-red-800 dark:bg-red-900/30 dark:border-red-500 dark:text-red-200"
-                    : "bg-blue-100 border-2 border-blue-500 text-blue-800 dark:bg-blue-900/30 dark:border-blue-500 dark:text-blue-200"
-                  }`}
-              >
-                {message.text}
-              </div>
-            )}
           </>
         )}
+      {/* Message Area */}
+      {message && (
+        <div
+          className={`mb-4 mx-auto inline-flex w-full items-center justify-center rounded-lg px-4 py-2.5 md:px-6 md:py-3 min-h-[42px] md:min-h-[50px] text-center font-semibold ${message.type === "success"
+            ? "bg-green-100 border-2 border-green-500 text-green-800 dark:bg-green-900/30 dark:border-green-500 dark:text-green-200"
+            : message.type === "error"
+              ? "bg-red-100 border-2 border-red-500 text-red-800 dark:bg-red-900/30 dark:border-red-500 dark:text-red-200"
+              : "bg-blue-100 border-2 border-blue-500 text-blue-800 dark:bg-blue-900/30 dark:border-blue-500 dark:text-blue-200"
+            }`}
+        >
+          {message.text}
+        </div>
+      )}
       </main>
 
       {currentExercise && (
